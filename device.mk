@@ -478,6 +478,10 @@ ro.facelock.lively_timeout=2500 \
 ro.facelock.est_max_time=600 \
 ro.facelock.use_intro_anim=false
 
+# drmservice prop
+PRODUCT_PROPERTY_OVERRIDES += \
+    drm.service.enabled=true
+
 $(call inherit-product-if-exists, hardware/qcom/msm8994/msm8994.mk)
 $(call inherit-product-if-exists, vendor/qcom/gpu/msm8994/msm8994-gpu-vendor.mk)
 
