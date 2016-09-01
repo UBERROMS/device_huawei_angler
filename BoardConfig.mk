@@ -140,7 +140,9 @@ USE_CLANG_PLATFORM_BUILD := true
 -include vendor/huawei/angler/BoardConfigVendor.mk
 
 # Inline kernel building
-TARGET_GCC_VERSION_ARM64 := 4.9-kernel
+TARGET_GCC_VERSION_ARM64 := 6.x
 TARGET_KERNEL_SOURCE := kernel/huawei/angler
 TARGET_KERNEL_CONFIG := kylo_defconfig
 BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
+
+BOARD_NEEDS_VENDORIMAGE_SYMLINK := true
