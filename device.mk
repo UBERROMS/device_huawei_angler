@@ -76,10 +76,6 @@ PRODUCT_COPY_FILES += \
     device/huawei/angler/qpnp_pon.kl:system/usr/keylayout/qpnp_pon.kl \
     device/huawei/angler/synaptics_dsx.idc:system/usr/idc/synaptics_dsx.idc
 
-# for launcher layout
-# PRODUCT_PACKAGES += \
-#    AnglerLayout
-
 # include fingerprintd
 PRODUCT_PACKAGES += \
     fingerprintd
@@ -276,6 +272,10 @@ DEVICE_PACKAGE_OVERLAYS := \
 # Allow tethering without provisioning app
 PRODUCT_PROPERTY_OVERRIDES += \
     net.tethering.noprovisioning=true
+
+# Mobile Data provision prop
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.com.android.prov_mobiledata=false
 
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.opengles.version=196610
