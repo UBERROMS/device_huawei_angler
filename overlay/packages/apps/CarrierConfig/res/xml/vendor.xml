@@ -1,4 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2016 The Pure Nexus Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
 <carrier_config_list>
     <carrier_config mcc="204" mnc="04">
         <int name="maxMessageSize" value="307200" />
@@ -9,7 +24,12 @@
         <string name="ci_action_on_sys_update_extra_string">ServerID</string>
         <string name="ci_action_on_sys_update_intent_string">com.android.omadm.service.CONFIGURATION_UPDATE</string>
         <string name="ci_action_on_sys_update_extra_val_string">com.vzwdmserver</string>
+        <boolean name="config_wifi_disable_in_ecbm" value="true" />
         <boolean name="disable_cdma_activation_code_bool" value="true" />
+        <string-array name="sim_state_detection_carrier_app_string_array" num="2">
+            <item value="com.google.android.carrierentitlement" />
+            <item value="com.google.android.carrierentitlement.VzwActivationReceiver" />
+        </string-array>
     </carrier_config>
     <carrier_config mcc="204" mnc="08">
         <int name="smsToMmsTextThreshold" value="5" />
@@ -75,6 +95,12 @@
         <boolean name="editable_wfc_mode_bool" value="false" />
         <boolean name="prefer_2g_bool" value="false" />
         <boolean name="hide_ims_apn_bool" value="true" />
+    </carrier_config>
+    <carrier_config mcc="234" mnc="30" gid1="B3">
+        <boolean name="carrier_name_override_bool" value="true" />
+    </carrier_config>
+    <carrier_config mcc="234" mnc="30" gid1="C3">
+        <boolean name="carrier_name_override_bool" value="true" />
     </carrier_config>
     <carrier_config mcc="234" mnc="31">
         <boolean name="prefer_2g_bool" value="false" />
@@ -263,7 +289,12 @@
         <string name="ci_action_on_sys_update_extra_string">ServerID</string>
         <string name="ci_action_on_sys_update_intent_string">com.android.omadm.service.CONFIGURATION_UPDATE</string>
         <string name="ci_action_on_sys_update_extra_val_string">com.vzwdmserver</string>
+        <boolean name="config_wifi_disable_in_ecbm" value="true" />
         <boolean name="disable_cdma_activation_code_bool" value="true" />
+        <string-array name="sim_state_detection_carrier_app_string_array" num="2">
+            <item value="com.google.android.carrierentitlement" />
+            <item value="com.google.android.carrierentitlement.VzwActivationReceiver" />
+        </string-array>
     </carrier_config>
     <carrier_config mcc="310" mnc="090">
         <int name="maxMessageSize" value="1048576" />
@@ -279,7 +310,15 @@
         <string name="ci_action_on_sys_update_extra_string">ServerID</string>
         <string name="ci_action_on_sys_update_intent_string">com.android.omadm.service.CONFIGURATION_UPDATE</string>
         <string name="ci_action_on_sys_update_extra_val_string">com.vzwdmserver</string>
+        <boolean name="config_wifi_disable_in_ecbm" value="true" />
         <boolean name="disable_cdma_activation_code_bool" value="true" />
+        <string-array name="sim_state_detection_carrier_app_string_array" num="2">
+            <item value="com.google.android.carrierentitlement" />
+            <item value="com.google.android.carrierentitlement.VzwActivationReceiver" />
+        </string-array>
+    </carrier_config>
+    <carrier_config mcc="311" mnc="480" gid1="BA01270000000000">
+        <boolean name="carrier_name_override_bool" value="true" />
     </carrier_config>
     <carrier_config mcc="334" mnc="020">
         <int name="smsToMmsTextThreshold" value="12" />
