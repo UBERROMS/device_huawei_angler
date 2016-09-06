@@ -431,17 +431,17 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # PRODUCT_PACKAGES += \
 #     QXDMLogger
 # endif # aosp_angler
-
-PRODUCT_COPY_FILES += \
-    device/huawei/angler/init.angler.diag.rc.userdebug:root/init.angler.diag.rc
-
+#
+# PRODUCT_COPY_FILES += \
+#    device/huawei/angler/init.angler.diag.rc.userdebug:root/init.angler.diag.rc
+#
 # subsystem ramdump collection
-PRODUCT_PROPERTY_OVERRIDES += \
-    persist.sys.ssr.enable_ramdumps=1
-else # userdebug eng
+# PRODUCT_PROPERTY_OVERRIDES += \
+#    persist.sys.ssr.enable_ramdumps=1
+# else # userdebug eng
 PRODUCT_COPY_FILES += \
     device/huawei/angler/init.angler.diag.rc.user:root/init.angler.diag.rc
-endif # userdebug eng
+# endif # userdebug eng
 
 # Incoming number (b/23529711)
 PRODUCT_PROPERTY_OVERRIDES += \
