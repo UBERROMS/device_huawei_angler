@@ -170,7 +170,8 @@ PRODUCT_PACKAGES += \
     hwcomposer.msm8994 \
     libgenlock \
     memtrack.msm8994 \
-    lights.angler
+    lights.angler \
+    libtinyxml
 
 USE_XML_AUDIO_POLICY_CONF := 1
 PRODUCT_PACKAGES += \
@@ -201,6 +202,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     camera.msm8994 \
     libcamera \
+    libmm-qcamera \
     libmmcamera_interface \
     libmmcamera_interface2 \
     libmmjpeg_interface \
