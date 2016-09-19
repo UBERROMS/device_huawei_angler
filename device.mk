@@ -202,7 +202,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     camera.msm8994 \
     libcamera \
-    libmm-qcamera \
     libmmcamera_interface \
     libmmcamera_interface2 \
     libmmjpeg_interface \
