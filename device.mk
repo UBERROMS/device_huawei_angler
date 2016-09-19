@@ -201,6 +201,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     camera.msm8994 \
     libcamera \
+    libmm-qcamera \
     libmmcamera_interface \
     libmmcamera_interface2 \
     libmmjpeg_interface \
@@ -211,6 +212,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     libgps.utils \
     gps.msm8994
+
+# TinyXML
+PRODUCT_PACKAGES += \
+    libtinyxml
 
 # Sensor & activity_recognition HAL
 TARGET_USES_NANOHUB_SENSORHAL := true
