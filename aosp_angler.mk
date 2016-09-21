@@ -36,6 +36,3 @@ $(call inherit-product-if-exists, vendor/huawei/angler/device-vendor.mk)
 
 PRODUCT_PACKAGES += \
     Launcher3
-
-PRODUCT_PACKAGES += \
-    AOSPLinks
