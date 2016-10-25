@@ -29,6 +29,10 @@ TARGET_2ND_CPU_ABI := armeabi-v7a
 TARGET_2ND_CPU_ABI2 := armeabi
 TARGET_2ND_CPU_VARIANT := cortex-a53.a57
 
+STRICT_ALIASING := true
+POLLY_OPTS := true
+GRAPHITE_OPTS := true
+
 ENABLE_CPUSETS := true
 
 BOARD_KERNEL_BASE        := 0x00000000
@@ -40,6 +44,10 @@ BOARD_KERNEL_CMDLINE := androidboot.hardware=angler androidboot.console=ttyHSL0 
 BOARD_MKBOOTIMG_ARGS := --ramdisk_offset $(BOARD_RAMDISK_OFFSET) --tags_offset $(BOARD_KERNEL_TAGS_OFFSET)
 
 BOARD_USES_ALSA_AUDIO := true
+
+# Needed for VoLTE
+AUDIO_FEATURE_ENABLED_MULTI_VOICE_SESSIONS := true
+
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_BCM := true
 BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/huawei/angler/bluetooth
@@ -69,21 +77,13 @@ TARGET_USES_C2D_COMPOSITION := true
 TARGET_FORCE_HWC_FOR_VIRTUAL_DISPLAYS := true
 MAX_VIRTUAL_DISPLAY_DIMENSION := 2048
 
-HAVE_ADRENO_SOURCE:= false
+HAVE_ADRENO_SOURCE := false
+OVERRIDE_RS_DRIVER := libRSDriver_adreno.so
 
-OVERRIDE_RS_DRIVER:= libRSDriver_adreno.so
 BOARD_CHARGER_DISABLE_INIT_BLANK := true
+
 # Enable auto suspend in poweroff charging to save power
 BOARD_CHARGER_ENABLE_SUSPEND := true
-
-# Enable dex-preoptimization to speed up first boot sequence
-ifeq ($(HOST_OS),linux)
-  ifneq ($(TARGET_BUILD_VARIANT),eng)
-    ifeq ($(WITH_DEXPREOPT),)
-      WITH_DEXPREOPT := true
-    endif
-  endif
-endif
 
 TARGET_USERIMAGES_USE_EXT4 := true
 BOARD_BOOTIMAGE_PARTITION_SIZE := 33554432
@@ -107,8 +107,6 @@ BOARD_SEPOLICY_DIRS += \
 TARGET_USES_64_BIT_BINDER := true
 
 TARGET_USES_AOSP := true
-
-TARGET_USES_INTERACTION_BOOST := true
 
 TARGET_RECOVERY_UI_LIB := librecovery_ui_nanohub
 
@@ -141,3 +139,12 @@ BOARD_PERFSETUP_SCRIPT := platform_testing/scripts/perf-setup/angler-setup.sh
 USE_CLANG_PLATFORM_BUILD := true
 
 -include vendor/huawei/angler/BoardConfigVendor.mk
+
+# Inline kernel building
+TARGET_GCC_VERSION_ARM64 := 6.x
+TARGET_KERNEL_SOURCE := kernel/huawei/angler
+TARGET_KERNEL_CONFIG := angler_defconfig
+BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
+
+# Use kernel headers for some HALs
+TARGET_COMPILE_WITH_MSM_KERNEL := true
