@@ -217,9 +217,10 @@ PRODUCT_PACKAGES += \
     libgps.utils \
     gps.msm8994
 
-# TinyXML
+# XML Packages
 PRODUCT_PACKAGES += \
-    libtinyxml
+    libtinyxml \
+    libxml2
 
 # Sensor & activity_recognition HAL
 TARGET_USES_NANOHUB_SENSORHAL := true
