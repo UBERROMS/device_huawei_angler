@@ -29,12 +29,6 @@ on init
 
     symlink /sdcard /storage/sdcard0
 
-    # Setup zram options
-    write /sys/block/zram0/comp_algorithm lz4
-    write /sys/block/zram0/max_comp_streams 4
-
-    write /proc/sys/vm/page-cluster 0
-
 on fs
     mount_all ./fstab.angler
     swapon_all ./fstab.angler
@@ -134,9 +128,6 @@ on boot
     chown root system /sys/class/kgsl/kgsl-3d0/dispatch/inflight_low_latency
     chmod 0660 /sys/class/kgsl/kgsl-3d0/dispatch/inflight_low_latency
 
-    write /sys/block/mmcblk0/queue/rq_affinity 0
-    write /sys/block/mmcblk0/queue/scheduler noop
-
 on property:init.svc.per_mgr=running
     start per_proxy
 
@@ -228,26 +219,6 @@ on post-fs-data
     chmod 0660 /sys/devices/system/cpu/cpu6/online
     chown system system /sys/devices/system/cpu/cpu7/online
     chmod 0660 /sys/devices/system/cpu/cpu7/online
-on charger
-   #set cpu4,5 online first, or they can't get into low power consumption mode
-   write /sys/devices/system/cpu/cpu4/online 1
-   write /sys/devices/system/cpu/cpu5/online 1
-   #low power governing
-   write /sys/devices/soc.0/qcom,bcl.60/mode disable
-   write /sys/devices/soc.0/qcom,bcl.60/hotplug_mask 0
-   write /sys/devices/soc.0/qcom,bcl.60/hotplug_soc_mask 0
-   write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor interactive
-   write /sys/devices/system/cpu/cpu1/online 0
-   write /sys/devices/system/cpu/cpu2/online 0
-   write /sys/devices/system/cpu/cpu3/online 0
-   write /sys/devices/system/cpu/cpu4/online 0
-   write /sys/devices/system/cpu/cpu5/online 0
-   write /sys/devices/system/cpu/cpu6/online 0
-   write /sys/devices/system/cpu/cpu7/online 0
-
-on property:sys.boot_completed=1
-     #allow CPUs to go in deeper idle state than C0
-     write /sys/module/lpm_levels/parameters/sleep_disabled 0
 
 # Search the laser device under /dev/input, then create symlink
 service InputEventFind /vendor/bin/InputEventFind
@@ -257,22 +228,6 @@ service InputEventFind /vendor/bin/InputEventFind
 service ssr_setup /system/bin/ssr_setup
     oneshot
     disabled
-
-service ss_ramdump /system/bin/subsystem_ramdump
-    class main
-    user system
-    group system
-    disabled
-
-on property:persist.sys.ssr.restart_level=*
-    start ssr_setup
-
-on property:persist.sys.ssr.enable_ramdumps=1
-    write /sys/module/subsystem_restart/parameters/enable_ramdumps 1
-    start ss_ramdump
-
-on property:persist.sys.ssr.enable_ramdumps=0
-    write /sys/module/subsystem_restart/parameters/enable_ramdumps 0
 
 service charger /sbin/healthd -c
     class charger
@@ -310,26 +265,11 @@ service irsc_util /vendor/bin/irsc_util "/vendor/etc/sec_config"
     user root
     oneshot
 
-service thermal-engine /vendor/bin/thermal-engine
-    class main
-    user root
-    socket thermal-send-client stream 0660 system system
-    socket thermal-recv-client stream 0660 system system
-    socket thermal-recv-passive-client stream 0660 system system
-    group root radio system
-    writepid /dev/cpuset/system-background/tasks
-
 # QMUX must be in multiple groups to support external process connections
 service qmuxd /vendor/bin/qmuxd
     class main
     user radio
     group radio audio bluetooth wakelock gps
-    writepid /dev/cpuset/system-background/tasks
-
-service perfd /vendor/bin/perfd
-    class main
-    user root
-    group system
     writepid /dev/cpuset/system-background/tasks
 
 service netmgrd /vendor/bin/netmgrd
@@ -353,13 +293,6 @@ service loc_launcher /vendor/bin/loc_launcher
     class late_start
     group gps inet net_raw net_admin wifi
     writepid /dev/cpuset/system-background/tasks
-
-# bugreport is triggered by holding down volume down, volume up and power
-service bugreport /system/bin/dumpstate -d -p -B -z \
-        -o /data/user_de/0/com.android.shell/files/bugreports/bugreport
-    class main
-    disabled
-    oneshot
 
 # start camera server as daemon
 service qcamerasvr /vendor/bin/mm-qcamera-daemon
