@@ -22,6 +22,9 @@
 # Enable support for chinook sensorhub
 TARGET_USES_CHINOOK_SENSORHUB := false
 
+# We don't want more than nano
+GAPPS_VARIANT := nano
+
 PRODUCT_COPY_FILES += \
     device/huawei/angler/init.angler.rc:root/init.angler.rc \
     device/huawei/angler/init.angler.usb.rc:root/init.angler.usb.rc \
@@ -76,9 +79,38 @@ PRODUCT_COPY_FILES += \
     device/huawei/angler/qpnp_pon.kl:system/usr/keylayout/qpnp_pon.kl \
     device/huawei/angler/synaptics_dsx.idc:system/usr/idc/synaptics_dsx.idc
 
-# for launcher layout
-#PRODUCT_PACKAGES += \
-#    AnglerLayout
+# Define Gapps Packages (Those I use)
+
+# Chrome
+PRODUCT_PACKAGES += \
+	Chrome
+GAPPS_FORCE_BROWSER_OVERRIDES := true
+
+# Google Maps
+PRODUCT_PACKAGES += \
+	Maps
+
+# Google Camera
+PRODUCT_PACKAGES += GoogleCamera
+
+# Google Messenger
+PRODUCT_PACKAGES += \
+	PrebuiltBugle
+GAPPS_FORCE_MMS_OVERRIDES := true
+
+# Google Music
+PRODUCT_PACKAGES += \
+	Music2
+
+# Project fi
+PRODUCT_PACKAGES += \
+	GCS \
+        ProjectFi
+
+# Exclude Google Package Installer and HotwordEnrollment and tycho (since it's in vendor)
+GAPPS_EXCLUDED_PACKAGES +=  \
+	GooglePackageInstaller \
+	Hotword
 
 # include fingerprintd
 PRODUCT_PACKAGES += \
@@ -206,8 +238,7 @@ PRODUCT_PACKAGES += \
     libmmcamera_interface2 \
     libmmjpeg_interface \
     libqomx_core \
-    mm-qcamera-app \
-    SnapdragonCamera
+    mm-qcamera-app
 
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.camera.HAL3.enabled=1 \
@@ -300,9 +331,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
 	persist.radio.data_con_rprt=true
 
-# configure the HWUI memory limits
-$(call inherit-product, frameworks/native/build/phone-xxhdpi-3072-hwui-memory.mk)
-
 # VR HAL
 PRODUCT_PACKAGES += \
     vr.angler
@@ -311,11 +339,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     vidc.debug.perf.mode=2 \
     vidc.enc.dcvs.extra-buff-count=2
-
-# for perfd
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.min_freq_0=384000
-    ro.min_freq_4=384000
 
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.vendor.extension_library=libqti-perfd-client.so
@@ -463,8 +486,11 @@ ifneq (,$(filter userdebug, $(TARGET_BUILD_VARIANT)))
     $(call add-product-dex-preopt-module-config,wifi-service,--generate-mini-debug-info)
 endif
 
+# configure the HWUI memory limits
+$(call inherit-product, frameworks/native/build/phone-xxhdpi-3072-hwui-memory.mk)
+
 # setup dalvik vm configs.
-$(call inherit-product, frameworks/native/build/phone-xxhdpi-3072-dalvik-heap.mk)
+$(call inherit-product, frameworks/native/build/phone-xxxhdpi-3072-dalvik-heap.mk)
 
 # drmservice prop
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -487,6 +513,9 @@ $(call inherit-product-if-exists, vendor/huawei/angler/angler-vendor-blobs.mk)
 
 # copy wlan firmware
 $(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/firmware/bcm4358/device-bcm.mk)
+
+# include gapps
+$(call inherit-product, vendor/google/build/opengapps-packages.mk)
 
 # GPS configuration
 PRODUCT_COPY_FILES += \
