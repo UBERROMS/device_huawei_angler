@@ -5,7 +5,7 @@ userdebug_or_eng(`
 ')
 
 # access for speaker calibration file
-allow audioserver persist_file:dir search;
+allow audioserver persist_file:dir { getattr open read search };
 allow audioserver persist_audio_file:dir search;
 allow audioserver persist_audio_file:file r_file_perms;
 
