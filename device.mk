@@ -80,10 +80,6 @@ PRODUCT_COPY_FILES += \
     device/huawei/angler/qpnp_pon.kl:system/usr/keylayout/qpnp_pon.kl \
     device/huawei/angler/synaptics_dsx.idc:system/usr/idc/synaptics_dsx.idc
 
-# for launcher layout
-#PRODUCT_PACKAGES += \
-#    AnglerLayout
-
 # include fingerprintd
 PRODUCT_PACKAGES += \
     fingerprintd
@@ -146,7 +142,6 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.vr.high_performance.xml:system/etc/permissions/android.hardware.vr.high_performance.xml \
     frameworks/native/data/etc/android.hardware.vulkan.level-0.xml:system/etc/permissions/android.hardware.vulkan.level.xml \
     frameworks/native/data/etc/android.hardware.vulkan.version-1_0_3.xml:system/etc/permissions/android.hardware.vulkan.version.xml
-
 
 # MSM IRQ Balancer configuration file
 PRODUCT_COPY_FILES += \
@@ -221,6 +216,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     libtinyxml \
     libxml2
+
+# Libprotobuf
+PRODUCT_PACKAGES += \
+    libprotobuf-cpp-full
 
 # Sensor & activity_recognition HAL
 TARGET_USES_NANOHUB_SENSORHAL := true
