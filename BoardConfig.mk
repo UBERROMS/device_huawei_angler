@@ -30,13 +30,15 @@ TARGET_2ND_CPU_ABI2 := armeabi
 TARGET_2ND_CPU_VARIANT := cortex-a53.a57
 
 ENABLE_CPUSETS := true
+STRICT_ALIASING := true
+GRAPHITE_OPTS := true
 
 BOARD_KERNEL_BASE        := 0x00000000
 BOARD_KERNEL_PAGESIZE    := 4096
 BOARD_KERNEL_TAGS_OFFSET := 0x01E00000
 BOARD_RAMDISK_OFFSET     := 0x02000000
 
-BOARD_KERNEL_CMDLINE := androidboot.hardware=angler androidboot.console=ttyHSL0 msm_rtb.filter=0x37 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 boot_cpus=0-3 no_console_suspend
+BOARD_KERNEL_CMDLINE := androidboot.hardware=angler androidboot.console=ttyHSL0 msm_rtb.filter=0x37 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 boot_cpus=0-7 no_console_suspend
 BOARD_MKBOOTIMG_ARGS := --ramdisk_offset $(BOARD_RAMDISK_OFFSET) --tags_offset $(BOARD_KERNEL_TAGS_OFFSET)
 
 # Audio
@@ -71,9 +73,9 @@ TARGET_USES_C2D_COMPOSITION := true
 TARGET_FORCE_HWC_FOR_VIRTUAL_DISPLAYS := true
 MAX_VIRTUAL_DISPLAY_DIMENSION := 2048
 
-HAVE_ADRENO_SOURCE:= false
+HAVE_ADRENO_SOURCE := false
+OVERRIDE_RS_DRIVER := libRSDriver_adreno.so
 
-OVERRIDE_RS_DRIVER:= libRSDriver_adreno.so
 BOARD_CHARGER_DISABLE_INIT_BLANK := true
 # Enable auto suspend in poweroff charging to save power
 BOARD_CHARGER_ENABLE_SUSPEND := true
@@ -86,6 +88,9 @@ ifeq ($(HOST_OS),linux)
     endif
   endif
 endif
+
+# Needed for VoLTE
+AUDIO_FEATURE_ENABLED_MULTI_VOICE_SESSIONS := true
 
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
@@ -143,3 +148,12 @@ BOARD_PERFSETUP_SCRIPT := platform_testing/scripts/perf-setup/angler-setup.sh
 USE_CLANG_PLATFORM_BUILD := true
 
 -include vendor/huawei/angler/BoardConfigVendor.mk
+
+# Inline kernel building
+TARGET_GCC_VERSION_ARM64 := 6.x
+TARGET_KERNEL_SOURCE := kernel/huawei/angler
+TARGET_KERNEL_CONFIG := angler_defconfig
+BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
+
+# Use kernel headers for some HALs
+TARGET_COMPILE_WITH_MSM_KERNEL := true
